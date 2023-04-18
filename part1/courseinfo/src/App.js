@@ -1,4 +1,5 @@
 import React from 'react';
+import './index.css';
 
 const Header = (props) => (
     <h1>{props.name}</h1>
@@ -18,6 +19,7 @@ const Content = (props) => (
       <Part part={props.parts[2]} />
     </>
 )
+// sassd
 
 const Total = (props) => {
   let total = props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises;
