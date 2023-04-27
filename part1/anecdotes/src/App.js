@@ -2,11 +2,11 @@ import './App.css';
 import { useState } from 'react';
 
 const Button = ({onclick, text}) => {
-  return <button onClick={onclick}>{text}</button>
+ <button onClick={onclick}>{text}</button>
 }
 
 const Votes = ({votes}) => {
-  return <p>has {votes} votes</p>
+ <p>has {votes} votes</p>
 }
 
 const MostRated = ({anecdotes, points}) => {
