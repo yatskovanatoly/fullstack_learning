@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-  const Filter = ({startNewSearch, newSearch}) => 
-    <>search by name: <input value={newSearch} onChange={startNewSearch}></input></>
-
+  const Filter = ({newSearch, setNewSearch}) => 
+    <>search by name: <input value={newSearch} onChange={(e) => setNewSearch(e.target.value)}/></>
+  
   const PersonForm = ({persons, setPersons}) => {
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
@@ -62,7 +62,9 @@ import React, { useState } from 'react';
       )
     }
 
-  const Persons = ({filtered}) => {
+  const Persons = ({persons, newSearch}) => {
+    const filtered = persons.filter(({name}) => name.match(new RegExp(`${newSearch}`,'gim')))
+    console.log(newSearch, filtered);
       return filtered.map(person => 
         <p key={person.id} person={person}>{person.name} {person.number}</p>)
       }
@@ -76,16 +78,12 @@ import React, { useState } from 'react';
       { name: 'Mary Poppendieck', number: '39-23-6423122', id: 3 }
     ])
     const [newSearch, setNewSearch] = useState('')
-    const filtered = persons.filter(({name}) => name.match(new RegExp(`${newSearch}`,'gim')))
-    console.log(filtered);
-    const startNewSearch = (event) => {
-        setNewSearch(event.target.value)
-      }
+   
 
     return (
       <div>
         <h1>Phonebook</h1>
-        <Filter persons={persons} startNewSearch={startNewSearch} newSearch={newSearch} />
+        <Filter persons={persons} newSearch={newSearch} setNewSearch={setNewSearch}/>
         <h2>add new contact</h2>
         <PersonForm persons={persons} setPersons={setPersons}/>
         <h3>Numbers</h3>
@@ -97,7 +95,7 @@ import React, { useState } from 'react';
             </tr>
           </tbody>
             </table>
-        <Persons filtered={filtered} />
+        <Persons persons={persons} newSearch={newSearch}/>
       </div>
     )
   }
