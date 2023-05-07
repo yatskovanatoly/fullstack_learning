@@ -1,4 +1,5 @@
 import { React, useState } from "react";
+import personService from "../services/personService";
 
 const PersonForm = ({persons, setPersons}) => {
     const [newName, setNewName] = useState('')
@@ -6,33 +7,49 @@ const PersonForm = ({persons, setPersons}) => {
 
     const newPerson = {
       name: newName,
-      number: newNumber,
-      id: persons.length
+      number: newNumber, 
+      // id: persons.length + 1
     }
-    const checkIfNameExist = () => {
+    const checkIfNameExists = () => {
       return persons.map(person => JSON.stringify(person.name).toUpperCase() === JSON.stringify(newPerson.name).toUpperCase())
     }
 
-    const checkIfNumberExist = () => {
+    const checkIfNumberExists = () => {
       const regex = /^8|\+(?<=\+)\d|-/gm
       return persons.map(person => person.number?.replace(regex, '') === newPerson.number?.replace(regex, ''))
     }
 
     const addNewPerson = (event) => {
       event.preventDefault()    
-      if (checkIfNameExist().find(e => e === true) && (checkIfNumberExist().find(e => e === true))) {
+      if (checkIfNameExists().find(e => e === true) && (checkIfNumberExists().find(e => e === true))) {
         alert(`Both ${newName} and ${newNumber} are already added`)
       }
-        else if (checkIfNameExist().find(e => e === true)) {
-          alert(`${newName} is already added`)
+        else if (checkIfNameExists().find(e => e === true)) {
+          const person = persons.find(n => (n.name).toUpperCase() === (newName).toUpperCase())
+          console.log(person);
+          if (window.confirm(`${person.name} is already on the phonebook. Update their number?`)) {
+            const changedPerson = { ...person, number: newNumber}
+            
+            personService
+              .update(person.id, changedPerson)
+              .then(returnedPerson => {
+                setPersons(persons.map(person => (person.name).toUpperCase() !== (newPerson.name).toUpperCase() ? person : returnedPerson))
+                setNewName('')
+                setNewNumber('')
+              })
+          }
       } 
-        else if (checkIfNumberExist().find(e => e === true)) {
+        else if (checkIfNumberExists().find(e => e === true)) {
           alert(`The number ${newNumber} is already added`)
       } 
         else {
-          setPersons(persons.concat(newPerson))
-          setNewName('') 
-          setNewNumber('')
+          personService
+          .create(newPerson)
+          .then(newPerson => {
+            setPersons(persons.concat(newPerson))
+            setNewNumber('')
+            setNewName('')
+          })
         }
     }
 

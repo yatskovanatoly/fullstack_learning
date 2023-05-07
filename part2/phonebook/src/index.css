@@ -11,3 +11,24 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.removeButton {
+  border: none;
+  background-color: transparent;
+  font-weight: bold;
+  scale: 1.5;
+  color: gainsboro;
+  transition: scale 0.25s ease;
+  margin: 0 10px;
+  padding: 0;
+}
+
+.removeButton:hover {
+  color: grey;
+  cursor: pointer;
+  scale: 1.8;
+}
+
+.removeButton:active {
+  color: tomato;
+}

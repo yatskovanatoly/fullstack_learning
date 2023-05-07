@@ -2,24 +2,19 @@ import React, { useState, useEffect } from 'react';
 import Filter from './components/Filter.js'
 import PersonForm from './components/PersonForm.js';
 import Persons from './components/Persons.js';
-import axios from 'axios'
+import personService from './services/personService.js';
 
   const App = () => {
     const [persons, setPersons] = useState([])
     const [newSearch, setNewSearch] = useState('')
 
     useEffect(() => {
-      console.log('effect')
-      axios
-        .get('http://localhost:3001/persons')
-        .then(response => {
-          console.log('promise fulfilled')
-          setPersons(response.data)
+      personService
+        .getAll()
+        .then(persons => {
+          setPersons(persons)
         })
     }, [])
-    console.log('render', persons.length, 'persons')
-
-   
 
     return (
       <div>
@@ -31,12 +26,12 @@ import axios from 'axios'
           <table>
             <tbody>
               <tr>
-                <td width={150} ><strong>Name</strong></td>
+                <td width={150}><strong>Name</strong></td>
                 <td><strong>Phone</strong></td>
               </tr>
             </tbody>
           </table>
-        <Persons persons={persons} newSearch={newSearch}/>
+        <Persons persons={persons} newSearch={newSearch} setPersons={setPersons}/>
       </div>
     )
   }
