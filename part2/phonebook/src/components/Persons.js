@@ -8,10 +8,9 @@ const Persons = ({persons, newSearch, setPersons}) => {
       .remove(id)
       .then(
         setPersons(persons.filter(n => n.id !== id)),
-        console.log(`${toRemove.name} is deleted`))
+        console.log(`${toRemove.name} is removed`))
     }}
   const filtered = persons.filter(({name}) => name.match(new RegExp(`${newSearch}`,'gim')))
-      console.log(newSearch, filtered);
       return filtered.map(person => 
         <p 
         key={person.id}  

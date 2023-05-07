@@ -32,3 +32,22 @@ code {
 .removeButton:active {
   color: tomato;
 }
+
+.notification {
+  color: transparent;
+  transition: color 0.25s ease-out;
+  user-select: none;
+}
+
+.success {
+  color: green;
+}
+
+.warning {
+  color: orange;
+}
+
+.error {
+  color: red;
+}
+

@@ -7,7 +7,7 @@ import personService from './services/personService.js';
   const App = () => {
     const [persons, setPersons] = useState([])
     const [newSearch, setNewSearch] = useState('')
-
+    
     useEffect(() => {
       personService
         .getAll()
@@ -21,7 +21,7 @@ import personService from './services/personService.js';
         <h1>Phonebook</h1>
         <Filter persons={persons} newSearch={newSearch} setNewSearch={setNewSearch}/>
         <h2>add new contact</h2>
-        <PersonForm persons={persons} setPersons={setPersons}/>
+        <PersonForm persons={persons} setPersons={setPersons} />
         <h3>Numbers</h3>
           <table>
             <tbody>
