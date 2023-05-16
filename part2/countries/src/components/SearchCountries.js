@@ -1,0 +1,28 @@
+import { useEffect } from 'react'
+import TextField from '@mui/material/TextField';
+
+const SearchCountries = ({value, countriesData, newSearch, setResult, handleChange}) => {
+  useEffect(() => {
+    if (value) {
+        setResult(
+          countriesData.filter(country => country.name.common.match(newSearch))
+          )
+        }
+      }, [value])
+      
+
+    return countriesData.length < 1 ? 
+    (<TextField disabled 
+      label="loading countries..." 
+      value={value} 
+      onChange={handleChange}/>) : 
+    (<TextField  
+      className='textField' 
+      id="outlined-basic" 
+      label="find countries" 
+      variant="outlined" 
+      value={value} 
+      onChange={handleChange}/>)
+}
+
+export default SearchCountries
