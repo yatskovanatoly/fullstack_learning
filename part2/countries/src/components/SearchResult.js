@@ -76,15 +76,17 @@ const SearchResult = ({ result, value }) => {
     if (value === '') {
         return null
     }
+    else if (result.length === 0) {
+        return <Typography align='center'>Nothing was found</Typography>
+    }
     else if (result.length === 1) {
-        // return <div className='result'>{oneToDisplay}</div>
         return <Card sx={{ minWidth: 200 }}>{detailedInfo}</Card>
     }
     else if (result.length <= 10 && result.length > 1) {
         return <div className='result'>{resultToDisplay}</div>
     }
     else if (result.length > 10) {
-        return (`${result.length} countries found, please specify your search`)
+        return <Typography align='center'>{result.length} countries found, please specify your search</Typography>
     }
 }
 
