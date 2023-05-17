@@ -49,7 +49,7 @@ const SearchResult = ({ result, value }) => {
                             <img src={country.flags.png} alt={country.flags.alt} />
                             {country.capital ? <Item>{capitalInfo[result.indexOf(country)]}</Item> : ''}
                             <Item><Stack direction="row" alignItems="center" justifyContent={'center'} gap={0.5}><FmdGoodIcon fontSize='small' /><strong>Area:</strong> {country.area} km²</Stack></Item>
-                            {country.languages ? <Item> {country.languages ? <Stack direction="row" alignItems="center" justifyContent={'center'} gap={0.5}><TranslateIcon fontSize='small' /><strong> languages: </strong></Stack> : ''}
+                            {country.languages ? <Item> {country.languages ? <Stack direction="row" alignItems="center" justifyContent={'center'} gap={0.5}><TranslateIcon fontSize='small' /><strong> Languages: </strong></Stack> : ''}
                                 {Object.values(country.languages).join(', ')}</Item> : ''}
                         </Stack>
                     </Container>
@@ -67,7 +67,7 @@ const SearchResult = ({ result, value }) => {
                 <img src={country.flags.png} alt={country.flags.alt} />
                 {country.capital ? <Item>{capitalInfo[result.indexOf(country)]}</Item> : ''}
                 <Item><Stack direction="row" alignItems="center" justifyContent={'center'} gap={0.5}><FmdGoodIcon fontSize='small' /><strong>Area:</strong> {country.area} km²</Stack></Item>
-                {country.languages ? <Item> {country.languages ? <Stack direction="row" alignItems="center" justifyContent={'center'} gap={0.5}><TranslateIcon fontSize='small' /><strong> languages: </strong></Stack> : ''}
+                {country.languages ? <Item> {country.languages ? <Stack direction="row" alignItems="center" justifyContent={'center'} gap={0.5}><TranslateIcon fontSize='small' /><strong> Languages: </strong></Stack> : ''}
                     {Object.values(country.languages).join(', ')}</Item> : ''}
             </Stack>
         </Container>
