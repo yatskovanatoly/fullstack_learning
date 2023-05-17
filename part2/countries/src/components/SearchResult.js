@@ -6,56 +6,79 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
 import FmdGoodIcon from '@mui/icons-material/FmdGood';
 import TranslateIcon from '@mui/icons-material/Translate';
+import { Container, Card } from '@mui/material/';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import { styled } from '@mui/material/styles';
+import { positions } from '@mui/system';
 
-const SearchResult = ({result, value}) => {
+const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+}));
+
+
+const SearchResult = ({ result, value }) => {
     console.log(result);
     let capitalInfo = result.map(country => {
         if (country.capital) {
-                    return <><LocationCityIcon fontSize='small'/> <strong>capital{country.capital?.length > 1 ? 's' : ''}:</strong> {country.capital?.join(', ')}<br/></>
-                } else {return null}
-            }
-        )
-     
+            return <><Stack direction="row" alignItems="center" justifyContent={'center'} gap={0.5}><LocationCityIcon fontSize='small' /><strong>Capital{country.capital?.length > 1 ? 's' : ''}:</strong> {country.capital?.join(', ')}<br /></Stack></>
+        } else { return null }
+    }
+    )
+
     const resultToDisplay = result.map(country =>
-            <Accordion >
+        <Accordion sx={{ marginBottom: 1 }}>
             <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
             >
-              <Typography>
-                {country.name.common} {country.flag}
-              </Typography>
+                <Typography textAlign='center'>
+                    {country.name.common} {country.flag}
+                </Typography>
             </AccordionSummary>
             <AccordionDetails
             >
-              <Typography>
-                {capitalInfo[result.indexOf(country)]}
-                <FmdGoodIcon fontSize='small'/> <strong>area: </strong> {country.area} km²<br/>
-                {country.languages ? <strong><TranslateIcon fontSize='small'/> languages: </strong> : ''}
-                {country.languages ? Object.values(country.languages).join(', ') : ''}
-              </Typography>
-                <img src={country.flags.png} alt={country.flags.alt} />
+                <Typography>
+                    <Container>
+                        <Stack spacing={1}>
+                            <img src={country.flags.png} alt={country.flags.alt} />
+                            {country.capital ? <Item>{capitalInfo[result.indexOf(country)]}</Item> : ''}
+                            <Item><Stack direction="row" alignItems="center" justifyContent={'center'} gap={0.5}><FmdGoodIcon fontSize='small' /><strong>Area:</strong> {country.area} km²</Stack></Item>
+                            {country.languages ? <Item> {country.languages ? <Stack direction="row" alignItems="center" justifyContent={'center'} gap={0.5}><TranslateIcon fontSize='small' /><strong> languages: </strong></Stack> : ''}
+                                {Object.values(country.languages).join(', ')}</Item> : ''}
+                        </Stack>
+                    </Container>
+                </Typography>
             </AccordionDetails>
-          </Accordion>
-        )
+        </Accordion>
+    )
 
-    const oneToDisplay = result.map(country =>
-        <>
-            {country.name.common} {country.flag}<br/>
-            {capitalInfo[result.indexOf(country)]}
-            <FmdGoodIcon fontSize='small'/> <strong>area: </strong> {country.area} km²<br/>
-            {country.languages ? <strong><TranslateIcon fontSize='small'/> languages: </strong> : ''}
-            {country.languages ? Object.values(country.languages).join(', ') : ''}
+    const detailedInfo = result.map(country =>
+        <Container>
+            <Typography align='center' gutterBottom>
+                {country.name.common} {country.flag}<br />
+            </Typography>
+            <Stack spacing={1} margin={2}>
                 <img src={country.flags.png} alt={country.flags.alt} />
-        </>
-        )
+                {country.capital ? <Item>{capitalInfo[result.indexOf(country)]}</Item> : ''}
+                <Item><Stack direction="row" alignItems="center" justifyContent={'center'} gap={0.5}><FmdGoodIcon fontSize='small' /><strong>Area:</strong> {country.area} km²</Stack></Item>
+                {country.languages ? <Item> {country.languages ? <Stack direction="row" alignItems="center" justifyContent={'center'} gap={0.5}><TranslateIcon fontSize='small' /><strong> languages: </strong></Stack> : ''}
+                    {Object.values(country.languages).join(', ')}</Item> : ''}
+            </Stack>
+        </Container>
+    )
 
-  if (value === '') {
+    if (value === '') {
         return null
-    } 
+    }
     else if (result.length === 1) {
-            return <div className='result'>{oneToDisplay}</div>
+        // return <div className='result'>{oneToDisplay}</div>
+        return <Card sx={{ minWidth: 200 }}>{detailedInfo}</Card>
     }
     else if (result.length <= 10 && result.length > 1) {
         return <div className='result'>{resultToDisplay}</div>
@@ -63,6 +86,6 @@ const SearchResult = ({result, value}) => {
     else if (result.length > 10) {
         return (`${result.length} countries found, please specify your search`)
     }
-  }
+}
 
 export default SearchResult

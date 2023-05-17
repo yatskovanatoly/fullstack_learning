@@ -13,6 +13,7 @@ const [warning, setWarning] = useState('')
 const newSearch = (new RegExp(`^${value}`,'gim'))
 
 useEffect(() => {
+  console.log('request made');
   countriesService
   .getAll()
   .then(countries => setCountriesData(countries))
@@ -31,28 +32,24 @@ const handleChange = (event) => {
 } 
 
   return (
-      <Container maxWidth="sm">
-    <div>
-    <SearchCountries 
-      handleChange={handleChange} 
-      value={value} 
-      setCountriesData={setCountriesData} 
-      countriesData={countriesData} 
-      newSearch={newSearch} 
-      setResult={setResult} 
-      setWarning={setWarning}
-    />
-    <br/>
-    {warning}
-    <div className='result'>
-    <SearchResult
-      result={result} 
-      value={value} 
-      setWarning={setWarning}
-    />
-    </div>
-    </div>
-    </Container>
+  <Container maxWidth="sm">
+      <SearchCountries 
+        handleChange={handleChange} 
+        value={value} 
+        setCountriesData={setCountriesData} 
+        countriesData={countriesData} 
+        newSearch={newSearch} 
+        setResult={setResult} 
+        setWarning={setWarning}
+      />
+      <br/>
+      {warning}
+      <SearchResult
+        result={result} 
+        value={value} 
+        setWarning={setWarning}
+      />
+  </Container>
   )
 }
 

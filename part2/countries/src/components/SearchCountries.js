@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import TextField from '@mui/material/TextField';
+import { Container } from '@mui/material';
 
 const SearchCountries = ({value, countriesData, newSearch, setResult, handleChange}) => {
   useEffect(() => {
@@ -12,17 +13,24 @@ const SearchCountries = ({value, countriesData, newSearch, setResult, handleChan
       
 
     return countriesData.length < 1 ? 
-    (<TextField disabled 
-      label="loading countries..." 
-      value={value} 
-      onChange={handleChange}/>) : 
-    (<TextField  
-      className='textField' 
-      id="outlined-basic" 
-      label="find countries" 
-      variant="outlined" 
-      value={value} 
-      onChange={handleChange}/>)
+    <Container>
+      <TextField 
+        fullWidth
+        disabled 
+        label="loading countries..." 
+        value={value} 
+        onChange={handleChange}/>
+    </Container> : 
+    <Container>
+      <TextField  
+        fullWidth
+        className='textField' 
+        id="outlined-basic" 
+        label="find countries" 
+        variant="outlined" 
+        value={value} 
+        onChange={handleChange}/>
+    </Container>
 }
 
 export default SearchCountries
