@@ -23,13 +23,13 @@ useEffect(() => {
 
 
 const handleChange = (event) => {
+  const notification = (slideIn, message) => <Slide sx={{marginBottom: '20px'}} in={slideIn} mountOnEnter unmountOnExit>
+  <Alert severity="info">{message}</Alert></Slide>
   const invalidCharacters = /[^\sa-z]/gi
   if (invalidCharacters.test(event.target.value)) {
-    setWarning(<Slide sx={{marginBottom: '20px'}} in mountOnEnter>
-      <Alert severity="info">Only latin symbols allowed</Alert></Slide>)
+    setWarning(notification(true, 'Only latin symbols allowed'))
     setTimeout(() => {
-      setWarning(<Slide sx={{marginBottom: '20px'}} out unmountOnExit>
-        <Alert severity="info">See ya!</Alert></Slide>);
+      setWarning(notification(false, 'See ya!'));
     }, 3000);
   }
   setValue(event.target.value.replace(invalidCharacters,''))
