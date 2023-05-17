@@ -26,6 +26,10 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const SearchResult = ({ result, value }) => {
     const [weatherData, setWeatherData] = useState('')
+    const [expanded, setExpanded] = useState(false);
+    const handleExpand = (panel) => (event, isExpanded) => {
+        setExpanded(isExpanded ? panel : false);
+    }
     const showWeather = (city) => {
         console.log('weather data request made');
         weather
@@ -33,7 +37,7 @@ const SearchResult = ({ result, value }) => {
             .then(res => setWeatherData(res.current))
             .catch(error => console.log('data not found'))
     }
-    
+
     useEffect(() => {
         if (result.length === 1) {
             showWeather(result[0].capital)
@@ -47,8 +51,8 @@ const SearchResult = ({ result, value }) => {
     }
     )
 
-    const resultToDisplay = result.map(country =>
-        <Accordion sx={{ marginBottom: 1 }}>
+    const resultToDisplay = result.map((country, i) =>
+        <Accordion sx={{ marginBottom: 1 }} expanded={expanded === (`panel${i + 1}`)} onChange={handleExpand(`panel${i + 1}`)}>
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
