@@ -1,38 +1,46 @@
-import { useEffect } from 'react'
-import TextField from '@mui/material/TextField';
-import { Container } from '@mui/material';
+import { useEffect } from "react";
+import TextField from "@mui/material/TextField";
+import { Container } from "@mui/material";
 
-const SearchCountries = ({value, countriesData, newSearch, setResult, handleChange}) => {
+const SearchCountries = ({
+  value,
+  countriesData,
+  newSearch,
+  setResult,
+  handleChange,
+}) => {
   useEffect(() => {
     if (value) {
-        setResult(
-          countriesData.filter(country => country.name.common.match(newSearch))
-          )
-        }
-      }, [value])
+      setResult(
+        countriesData.filter((country) => country.name.common.match(newSearch))
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
 
-      let disabled = true
-      let label = 'loading countries...'
-      if (countriesData.length > 1) {
-        disabled = false
-        label = 'find countries'
-      }
+  let disabled = true;
+  let label = "loading countries...";
+  if (countriesData.length > 1) {
+    disabled = false;
+    label = "find countries";
+  }
 
-   return (
+  return (
     <Container>
-      <TextField  
+      <TextField
         fullWidth
         disabled={disabled}
         label={label}
-        autoComplete='off'
-        autoCorrect='off'
-        className='textField' 
-        id="outlined-basic" 
-        variant="outlined" 
-        value={value} 
-        onChange={handleChange}/>
+        autoComplete="off"
+        autoCorrect="off"
+        className="textField"
+        id="outlined-basic"
+        variant="outlined"
+        value={value}
+        onChange={handleChange}
+      />
     </Container>
-   )
-}
+  );
+};
 
-export default SearchCountries
+export default SearchCountries;
