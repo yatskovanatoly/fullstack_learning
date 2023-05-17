@@ -10,29 +10,29 @@ const SearchCountries = ({value, countriesData, newSearch, setResult, handleChan
           )
         }
       }, [value])
-      
 
-    return countriesData.length < 1 ? 
-    <Container>
-      <TextField 
-        fullWidth
-        disabled 
-        label="loading countries..." 
-        value={value} 
-        onChange={handleChange}/>
-    </Container> : 
+      let disabled = true
+      let label = 'loading countries...'
+      if (countriesData.length > 1) {
+        disabled = false
+        label = 'find countries'
+      }
+      
+   return (
     <Container>
       <TextField  
         fullWidth
+        disabled={disabled}
+        label={label}
         autoComplete='off'
         autoCorrect='off'
         className='textField' 
         id="outlined-basic" 
-        label="find countries" 
         variant="outlined" 
         value={value} 
         onChange={handleChange}/>
     </Container>
+   )
 }
 
 export default SearchCountries

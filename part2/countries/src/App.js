@@ -15,10 +15,11 @@ const [warning, setWarning] = useState('')
 const newSearch = (new RegExp(`^${value}`,'gim'))
 
 useEffect(() => {
-  console.log('countries data - request made');
   countriesService
   .getAll()
   .then(countries => setCountriesData(countries))
+  .catch(error => console.log(error))
+  console.log('countries data - request made');
 }, [])
 
 
