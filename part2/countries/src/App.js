@@ -3,7 +3,7 @@ import { useState, useEffect} from 'react'
 import countriesService from './services/countriesService';
 import SearchCountries from './components/SearchCountries';
 import SearchResult from './components/SearchResult';
-import { Container } from '@mui/material/';
+import { Container, Typography } from '@mui/material/';
 import { Alert } from '@mui/material';
 import Slide from '@mui/material/Slide';
 
@@ -25,9 +25,9 @@ useEffect(() => {
 const handleChange = (event) => {
   const invalidCharacters = /[^\sa-z]/gi
   if (invalidCharacters.test(event.target.value)) {
-    setWarning(<Slide in direction='down' unmountOnExit><Alert severity="info">Only latin symbols allowed</Alert></Slide>)
+    setWarning(<Slide sx={{marginBottom: '20px'}} in unmountOnExit><Alert severity="info">Only latin symbols allowed</Alert></Slide>)
     setTimeout(() => {
-      setWarning(<Slide out unmountOnExit><Alert severity="info">Only latin symbols allowed</Alert></Slide>);
+      setWarning(<Slide sx={{marginBottom: '20px'}} out unmountOnExit><Alert severity="info">See ya!</Alert></Slide>);
     }, 3000);
   }
   setValue(event.target.value.replace(invalidCharacters,''))
@@ -45,7 +45,7 @@ const handleChange = (event) => {
         setWarning={setWarning}
       />
       <br/>
-      {warning}
+      <Container>{warning}</Container>
       <SearchResult
         result={result} 
         value={value} 
