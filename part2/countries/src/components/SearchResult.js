@@ -6,12 +6,12 @@ import {
   Container,
   Card,
   Paper,
-  Stack
+  Stack,
 } from "@mui/material";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import LocationCityIcon from '@mui/icons-material/LocationCity'
-import FmdGoodIcon from '@mui/icons-material/FmdGood'
-import TranslateIcon from '@mui/icons-material/Translate'
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import LocationCityIcon from "@mui/icons-material/LocationCity";
+import FmdGoodIcon from "@mui/icons-material/FmdGood";
+import TranslateIcon from "@mui/icons-material/Translate";
 import { styled } from "@mui/material/styles";
 import countriesService from "../services/countriesService";
 import { useEffect, useState } from "react";
@@ -30,12 +30,13 @@ const SearchResult = ({ result, value }) => {
   const handleExpand = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
+
   const showWeather = (city) => {
-      countriesService
+    countriesService
       .getWeather(city)
       .then((res) => setWeatherData(res.current))
       .catch((error) => console.log("data not found"));
-      console.log("weather data request made");
+    console.log("weather data request made");
   };
 
   useEffect(() => {
@@ -66,6 +67,7 @@ const SearchResult = ({ result, value }) => {
 
   const resultToDisplay = result.map((country, i) => (
     <Accordion
+      key={i+1}
       sx={{ marginBottom: 1 }}
       expanded={expanded === `panel${i + 1}`}
       onChange={handleExpand(`panel${i + 1}`)}
@@ -80,7 +82,7 @@ const SearchResult = ({ result, value }) => {
         </Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <Typography>
+        <Typography component={'span'}>
           <Container>
             <Stack spacing={1}>
               <img
@@ -117,7 +119,9 @@ const SearchResult = ({ result, value }) => {
                       <TranslateIcon fontSize="small" />
                       <strong> Languages: </strong>
                     </Stack>
-                  ) : ("")}
+                  ) : (
+                    ""
+                  )}
                   {Object.values(country.languages).join(", ")}
                 </Item>
               ) : (
@@ -130,8 +134,8 @@ const SearchResult = ({ result, value }) => {
     </Accordion>
   ));
 
-  const detailedInfo = result.map((country) => (
-    <Container>
+  const detailedInfo = result.map((country, i) => (
+    <Container key={i+1}>
       <Typography align="center" gutterBottom>
         {country.name.common} {country.flag}
       </Typography>
@@ -146,7 +150,11 @@ const SearchResult = ({ result, value }) => {
               gap={0}
             >
               {capitalInfo[result.indexOf(country)]}{" "}
-              <img className="weatherIcon" src={weatherData?.condition?.icon} alt='weather icon'/>{" "}
+              <img
+                className="weatherIcon"
+                src={weatherData?.condition?.icon}
+                alt="weather icon"
+              />{" "}
               {Math.round(weatherData?.temp_c)}°C
             </Stack>
           </Item>
@@ -196,7 +204,7 @@ const SearchResult = ({ result, value }) => {
   } else if (result.length === 1) {
     return <Card sx={{ minWidth: 200 }}>{detailedInfo}</Card>;
   } else if (result.length <= 10 && result.length > 1) {
-    return <div className="result">{resultToDisplay}</div>;
+    return <>{resultToDisplay}</>;
   } else if (result.length > 10) {
     return (
       <Typography align="center">
