@@ -4,6 +4,8 @@ import countriesService from './services/countriesService';
 import SearchCountries from './components/SearchCountries';
 import SearchResult from './components/SearchResult';
 import { Container } from '@mui/material/';
+import { Alert } from '@mui/material';
+import Slide from '@mui/material/Slide';
 
 function App() {
 const [value, setValue] = useState('')
@@ -23,16 +25,16 @@ useEffect(() => {
 const handleChange = (event) => {
   const invalidCharacters = /[^\sa-z]/gi
   if (invalidCharacters.test(event.target.value)) {
-    setWarning('only latin characters allowed')
+    setWarning(<Slide in direction='down' unmountOnExit><Alert severity="info">Only latin symbols allowed</Alert></Slide>)
     setTimeout(() => {
-      setWarning('');
-    }, 2000);
+      setWarning(<Slide out unmountOnExit><Alert severity="info">Only latin symbols allowed</Alert></Slide>);
+    }, 3000);
   }
   setValue(event.target.value.replace(invalidCharacters,''))
 } 
 
   return (
-  <Container maxWidth="sm">
+  <Container margin={1} maxWidth="sm">
       <SearchCountries 
         handleChange={handleChange} 
         value={value} 

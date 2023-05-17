@@ -24,6 +24,8 @@ const SearchCountries = ({value, countriesData, newSearch, setResult, handleChan
     <Container>
       <TextField  
         fullWidth
+        autoComplete='off'
+        autoCorrect='off'
         className='textField' 
         id="outlined-basic" 
         label="find countries" 
