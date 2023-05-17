@@ -11,7 +11,8 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import weather from '../services/weather';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -21,19 +22,27 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
-const showWeather = (city) => {
-    console.log('weather data request made');
-        weather
-        .getWeather(city)
-        .then(res => console.log(Math.round(res.current.temp_c)))
-        .catch(error => console.log('data not found'))
-}
+
 
 const SearchResult = ({ result, value }) => {
-    console.log(result);
+    const [weatherData, setWeatherData] = useState('')
+    const showWeather = (city) => {
+        console.log('weather data request made');
+        weather
+            .getWeather(city)
+            .then(res => setWeatherData(res.current))
+            .catch(error => console.log('data not found'))
+    }
+    
+    useEffect(() => {
+        if (result.length === 1) {
+            showWeather(result[0].capital)
+        }
+    }, [result])
+
     let capitalInfo = result.map(country => {
         if (country.capital) {
-            return <><Stack direction="row" alignItems="center" justifyContent={'center'} gap={0.5}><LocationCityIcon fontSize='small' /><strong>Capital{country.capital?.length > 1 ? 's' : ''}:</strong> {country.capital?.join(', ')}<br /></Stack></>
+            return <Stack direction="row" alignItems="center" justifyContent={'center'} gap={0.5}><LocationCityIcon fontSize='small' /><strong>Capital{country.capital?.length > 1 ? 's' : ''}:</strong> {country.capital?.join(', ')}<br /></Stack>
         } else { return null }
     }
     )
@@ -49,12 +58,11 @@ const SearchResult = ({ result, value }) => {
                     {country.name.common} {country.flag}
                 </Typography>
             </AccordionSummary>
-            <AccordionDetails
-            >
+            <AccordionDetails>
                 <Typography>
                     <Container>
                         <Stack spacing={1}>
-                            <img src={country.flags.png} alt={country.flags.alt} />
+                            <img className='flag' src={country.flags.png} alt={country.flags.alt} />
                             {country.capital ? <Item>{capitalInfo[result.indexOf(country)]}</Item> : ''}
                             <Item><Stack direction="row" alignItems="center" justifyContent={'center'} gap={0.5}><FmdGoodIcon fontSize='small' /><strong>Area:</strong> {country.area} km²</Stack></Item>
                             {country.languages ? <Item> {country.languages ? <Stack direction="row" alignItems="center" justifyContent={'center'} gap={0.5}><TranslateIcon fontSize='small' /><strong> Languages: </strong></Stack> : ''}
@@ -67,17 +75,17 @@ const SearchResult = ({ result, value }) => {
     )
 
     const detailedInfo = result.map(country =>
+
         <Container>
             <Typography align='center' gutterBottom>
                 {country.name.common} {country.flag}
             </Typography>
             <Stack spacing={1} margin={2}>
-                <img src={country.flags.png} alt={country.flags.alt} />
-                {country.capital ? <Item>{capitalInfo[result.indexOf(country)]}</Item> : ''}
+                <img className='flag' src={country.flags.png} alt={country.flags.alt} />
+                {country.capital ? <Item><Stack direction="row" alignItems="center" justifyContent={'center'} gap={0}>{capitalInfo[result.indexOf(country)]} <img className='weatherIcon' src={weatherData?.condition?.icon} /> {Math.round(weatherData?.temp_c)}°C</Stack></Item> : ''}
                 <Item><Stack direction="row" alignItems="center" justifyContent={'center'} gap={0.5}><FmdGoodIcon fontSize='small' /><strong>Area:</strong> {country.area} km²</Stack></Item>
                 {country.languages ? <Item> {country.languages ? <Stack direction="row" alignItems="center" justifyContent={'center'} gap={0.5}><TranslateIcon fontSize='small' /><strong> Languages: </strong></Stack> : ''}
                     {Object.values(country.languages).join(', ')}</Item> : ''}
-                <Item><button onClick={() => showWeather(country?.capital)}>log weather</button></Item>
             </Stack>
         </Container>
     )
