@@ -10,7 +10,8 @@ import { Container, Card } from '@mui/material/';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
-import { positions } from '@mui/system';
+import weather from '../services/weather';
+import { useEffect } from 'react';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -20,6 +21,13 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
+const showWeather = (city) => {
+    console.log('weather data request made');
+        weather
+        .getWeather(city)
+        .then(res => console.log(Math.round(res.current.temp_c)))
+        .catch(error => console.log('data not found'))
+}
 
 const SearchResult = ({ result, value }) => {
     console.log(result);
@@ -61,7 +69,7 @@ const SearchResult = ({ result, value }) => {
     const detailedInfo = result.map(country =>
         <Container>
             <Typography align='center' gutterBottom>
-                {country.name.common} {country.flag}<br />
+                {country.name.common} {country.flag}
             </Typography>
             <Stack spacing={1} margin={2}>
                 <img src={country.flags.png} alt={country.flags.alt} />
@@ -69,6 +77,7 @@ const SearchResult = ({ result, value }) => {
                 <Item><Stack direction="row" alignItems="center" justifyContent={'center'} gap={0.5}><FmdGoodIcon fontSize='small' /><strong>Area:</strong> {country.area} km²</Stack></Item>
                 {country.languages ? <Item> {country.languages ? <Stack direction="row" alignItems="center" justifyContent={'center'} gap={0.5}><TranslateIcon fontSize='small' /><strong> Languages: </strong></Stack> : ''}
                     {Object.values(country.languages).join(', ')}</Item> : ''}
+                <Item><button onClick={() => showWeather(country?.capital)}>log weather</button></Item>
             </Stack>
         </Container>
     )

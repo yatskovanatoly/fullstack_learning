@@ -3,7 +3,7 @@ import { useState, useEffect} from 'react'
 import countriesService from './services/countriesService';
 import SearchCountries from './components/SearchCountries';
 import SearchResult from './components/SearchResult';
-import { Container, Typography } from '@mui/material/';
+import { Container } from '@mui/material/';
 import { Alert } from '@mui/material';
 import Slide from '@mui/material/Slide';
 
@@ -15,7 +15,7 @@ const [warning, setWarning] = useState('')
 const newSearch = (new RegExp(`^${value}`,'gim'))
 
 useEffect(() => {
-  console.log('request made');
+  console.log('countries data - request made');
   countriesService
   .getAll()
   .then(countries => setCountriesData(countries))
@@ -25,9 +25,11 @@ useEffect(() => {
 const handleChange = (event) => {
   const invalidCharacters = /[^\sa-z]/gi
   if (invalidCharacters.test(event.target.value)) {
-    setWarning(<Slide sx={{marginBottom: '20px'}} in unmountOnExit><Alert severity="info">Only latin symbols allowed</Alert></Slide>)
+    setWarning(<Slide sx={{marginBottom: '20px'}} in mountOnEnter>
+      <Alert severity="info">Only latin symbols allowed</Alert></Slide>)
     setTimeout(() => {
-      setWarning(<Slide sx={{marginBottom: '20px'}} out unmountOnExit><Alert severity="info">See ya!</Alert></Slide>);
+      setWarning(<Slide sx={{marginBottom: '20px'}} out unmountOnExit>
+        <Alert severity="info">See ya!</Alert></Slide>);
     }, 3000);
   }
   setValue(event.target.value.replace(invalidCharacters,''))
