@@ -1,210 +1,43 @@
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Typography,
-  Container,
-  Card,
-  Paper,
-  Stack,
-} from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import LocationCityIcon from "@mui/icons-material/LocationCity";
-import FmdGoodIcon from "@mui/icons-material/FmdGood";
-import TranslateIcon from "@mui/icons-material/Translate";
-import { styled } from "@mui/material/styles";
-import countriesService from "../services/countriesService";
+import { Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
+import CountryInfo from "./CountryPanel";
+import CountriesList from "./CountriesList";
+import Item from "./Item";
+import CapitalPanel from "./CapitalPanel";
+import findWeather from "./WeatherFinder";
 
 const SearchResult = ({ result, value }) => {
-  const [weatherData, setWeatherData] = useState("");
-  const [expanded, setExpanded] = useState(false);
-  const handleExpand = (panel) => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
-  };
-
-  const showWeather = (city) => {
-    countriesService
-      .getWeather(city)
-      .then((res) => setWeatherData(res.current))
-      .catch((error) => console.log("data not found"));
-    console.log("weather data request made");
-  };
-
+  const [weatherData, setWeatherData] = useState([]);
   useEffect(() => {
-    if (result.length === 1) {
-      showWeather(result[0].capital);
+    if (result[0]?.capital) {
+      const cities = result.map((country) => country.capital);
+      console.log(cities);
+      findWeather({cities, setWeatherData});
     }
   }, [result]);
-
-  let capitalInfo = result.map((country) => {
-    if (country.capital) {
-      return (
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent={"center"}
-          gap={0.5}
-        >
-          <LocationCityIcon fontSize="small" />
-          <strong>Capital{country.capital?.length > 1 ? "s" : ""}:</strong>{" "}
-          {country.capital?.join(", ")}
-          <br />
-        </Stack>
-      );
-    } else {
-      return null;
-    }
-  });
-
-  const resultToDisplay = result.map((country, i) => (
-    <Accordion
-      key={i+1}
-      sx={{ marginBottom: 1 }}
-      expanded={expanded === `panel${i + 1}`}
-      onChange={handleExpand(`panel${i + 1}`)}
-    >
-      <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
-        aria-controls="panel1a-content"
-        id="panel1a-header"
-      >
-        <Typography textAlign="center">
-          {country.name.common} {country.flag}
-        </Typography>
-      </AccordionSummary>
-      <AccordionDetails>
-        <Typography component={'span'}>
-          <Container>
-            <Stack spacing={1}>
-              <img
-                className="flag"
-                src={country.flags.png}
-                alt={country.flags.alt}
-              />
-              {country.capital ? (
-                <Item>{capitalInfo[result.indexOf(country)]}</Item>
-              ) : (
-                ""
-              )}
-              <Item>
-                <Stack
-                  direction="row"
-                  alignItems="center"
-                  justifyContent={"center"}
-                  gap={0.5}
-                >
-                  <FmdGoodIcon fontSize="small" />
-                  <strong>Area:</strong> {country.area} km²
-                </Stack>
-              </Item>
-              {country.languages ? (
-                <Item>
-                  {" "}
-                  {country.languages ? (
-                    <Stack
-                      direction="row"
-                      alignItems="center"
-                      justifyContent={"center"}
-                      gap={0.5}
-                    >
-                      <TranslateIcon fontSize="small" />
-                      <strong> Languages: </strong>
-                    </Stack>
-                  ) : (
-                    ""
-                  )}
-                  {Object.values(country.languages).join(", ")}
-                </Item>
-              ) : (
-                ""
-              )}
-            </Stack>
-          </Container>
-        </Typography>
-      </AccordionDetails>
-    </Accordion>
-  ));
-
-  const detailedInfo = result.map((country, i) => (
-    <Container key={i+1}>
-      <Typography align="center" gutterBottom>
-        {country.name.common} {country.flag}
-      </Typography>
-      <Stack spacing={1} margin={2}>
-        <img className="flag" src={country.flags.png} alt={country.flags.alt} />
-        {country.capital ? (
-          <Item>
-            <Stack
-              direction="row"
-              alignItems="center"
-              justifyContent={"center"}
-              gap={0}
-            >
-              {capitalInfo[result.indexOf(country)]}{" "}
-              <img
-                className="weatherIcon"
-                src={weatherData?.condition?.icon}
-                alt="weather icon"
-              />{" "}
-              {Math.round(weatherData?.temp_c)}°C
-            </Stack>
-          </Item>
-        ) : (
-          ""
-        )}
-        <Item>
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent={"center"}
-            gap={0.5}
-          >
-            <FmdGoodIcon fontSize="small" />
-            <strong>Area:</strong> {country.area} km²
-          </Stack>
-        </Item>
-        {country.languages ? (
-          <Item>
-            {" "}
-            {country.languages ? (
-              <Stack
-                direction="row"
-                alignItems="center"
-                justifyContent={"center"}
-                gap={0.5}
-              >
-                <TranslateIcon fontSize="small" />
-                <strong> Languages: </strong>
-              </Stack>
-            ) : (
-              ""
-            )}
-            {Object.values(country.languages).join(", ")}
-          </Item>
-        ) : (
-          ""
-        )}
-      </Stack>
-    </Container>
-  ));
 
   if (value === "") {
     return null;
   } else if (result.length === 0) {
     return <Typography align="center">Nothing was found</Typography>;
   } else if (result.length === 1) {
-    return <Card sx={{ minWidth: 200 }}>{detailedInfo}</Card>;
+    return (
+      <CountryInfo
+        result={result}
+        Item={Item}
+        weatherData={weatherData}
+        CapitalPanel={CapitalPanel}
+      />
+    );
   } else if (result.length <= 10 && result.length > 1) {
-    return <>{resultToDisplay}</>;
+    return (
+      <CountriesList
+        result={result}
+        Item={Item}
+        weatherData={weatherData}
+        CapitalPanel={CapitalPanel}
+      />
+    );
   } else if (result.length > 10) {
     return (
       <Typography align="center">
