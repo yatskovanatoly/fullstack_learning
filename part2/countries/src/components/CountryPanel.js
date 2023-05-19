@@ -1,10 +1,11 @@
-import { Typography, Container, Card, Stack, Box } from "@mui/material";
+import { Typography, Card, Stack, Box } from "@mui/material";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import TranslateIcon from "@mui/icons-material/Translate";
 import CapitalPanel from "./CapitalPanel";
+import Item from "./Item";
 
-const CountryPanel = ({ result, Item, weatherData }) => {
-  return result.map((country, i) => (
+const CountryPanel = ({ result, weatherData, country, i }) => {
+    return (
     <Box display="flex" alignItems="center" justifyContent="center">
       <Card key={i + 1} sx={{ minWidth: 300, maxWidth: 400 }}>
         <Typography align="center" gutterBottom>
@@ -75,7 +76,7 @@ const CountryPanel = ({ result, Item, weatherData }) => {
         </Stack>
       </Card>
     </Box>
-  ));
+    )
 };
 
 export default CountryPanel;

@@ -3,10 +3,14 @@ import {
   AccordionSummary,
   AccordionDetails,
   Typography,
-  Box,
+  Container,
+  Stack,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import FmdGoodIcon from "@mui/icons-material/FmdGood";
+import TranslateIcon from "@mui/icons-material/Translate";
 import { useState } from "react";
+import CapitalPanel from "./CapitalPanel";
 import Item from "./Item";
 import CountryPanel from "./CountryPanel";
 
@@ -17,10 +21,16 @@ const CountriesList = ({ result, weatherData }) => {
   };
 
   return result.map((country, i) => (
-    <Box display="flex" alignItems="center" justifyContent="center">
+    <Container
+      sx={{ marginBottom: 1, maxWidth: 400 }}
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+    >
       <Accordion
         key={i + 1}
         sx={{ marginBottom: 1 }}
+        // defaultExpanded={defaultExpanded}
         expanded={expanded === `panel${i + 1}`}
         onChange={handleExpand(`panel${i + 1}`)}
       >
@@ -34,16 +44,15 @@ const CountriesList = ({ result, weatherData }) => {
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography component={"span"}>
-            <CountryPanel
-              result={result}
-              Item={Item}
-              weatherData={weatherData}
-            />
-          </Typography>
+          <CountryPanel
+            country={country}
+            i={i}
+            result={result}
+            weatherData={weatherData}
+          />
         </AccordionDetails>
       </Accordion>
-    </Box>
+    </Container>
   ));
 };
 

@@ -23,6 +23,8 @@ const SearchResult = ({ result, value }) => {
   } else if (result.length === 1) {
     return (
       <CountryInfo
+        country={result[0]}
+        i={0}
         result={result}
         Item={Item}
         weatherData={weatherData}
