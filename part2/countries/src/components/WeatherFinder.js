@@ -1,5 +1,5 @@
 import countriesService from "../services/countriesService.js";
-
+const data = { username: 'example' };
 const findWeather = ({ cities, setWeatherData }) => {
   console.log("weather data – request made");
   const requests = cities[0].map((city) => countriesService.getWeather(city));

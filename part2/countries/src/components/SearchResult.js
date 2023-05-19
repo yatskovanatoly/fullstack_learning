@@ -5,6 +5,9 @@ import CountriesList from "./CountriesList";
 import Item from "./Item";
 import CapitalPanel from "./CapitalPanel";
 import findWeather from "./WeatherFinder";
+import countriesService from "../services/countriesService.js";
+
+
 
 const SearchResult = ({ result, value }) => {
   const [weatherData, setWeatherData] = useState([]);

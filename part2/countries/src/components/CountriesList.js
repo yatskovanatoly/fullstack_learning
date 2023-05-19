@@ -4,14 +4,9 @@ import {
   AccordionDetails,
   Typography,
   Container,
-  Stack,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import FmdGoodIcon from "@mui/icons-material/FmdGood";
-import TranslateIcon from "@mui/icons-material/Translate";
 import { useState } from "react";
-import CapitalPanel from "./CapitalPanel";
-import Item from "./Item";
 import CountryPanel from "./CountryPanel";
 
 const CountriesList = ({ result, weatherData }) => {
