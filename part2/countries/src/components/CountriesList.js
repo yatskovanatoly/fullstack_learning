@@ -21,14 +21,8 @@ const CountriesList = ({ result, weatherData }) => {
   };
 
   return result.map((country, i) => (
-    <Container
-      sx={{ marginBottom: 1, maxWidth: 400 }}
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-    >
+    <Container key={i + 1} sx={{ marginBottom: 1, maxWidth: 400 }}>
       <Accordion
-        key={i + 1}
         sx={{ marginBottom: 1 }}
         // defaultExpanded={defaultExpanded}
         expanded={expanded === `panel${i + 1}`}

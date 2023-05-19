@@ -3,11 +3,11 @@ import { Stack } from "@mui/material";
 const Weather = ({ weatherData }) => {
   console.log(weatherData);
   if (!weatherData) {
-    return ["wtf"];
+    return null;
   }
-  return weatherData.map((data) => (
+  return weatherData.map((data, i) => (
     <Stack
-      key={data?.location}
+      key={i}
       direction="row"
       alignItems="center"
       justifyContent="center"

@@ -6,8 +6,8 @@ import Item from "./Item";
 
 const CountryPanel = ({ result, weatherData, country, i }) => {
     return (
-    <Box display="flex" alignItems="center" justifyContent="center">
-      <Card key={i + 1} sx={{ minWidth: 300, maxWidth: 400 }}>
+    <Box key={i + 1} display="flex" alignItems="center" justifyContent="center">
+      <Card sx={{ minWidth: 300, maxWidth: 400 }}>
         <Typography align="center" gutterBottom>
           {country.name.common} {country.flag}
         </Typography>

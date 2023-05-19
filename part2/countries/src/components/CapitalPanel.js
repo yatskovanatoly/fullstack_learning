@@ -3,10 +3,10 @@ import LocationCityIcon from "@mui/icons-material/LocationCity";
 import WeatherList from "./Weather";
 
 const CapitalList = ({ result, weatherData, countryIndex }) => {
-  let capitalInfo = result.map((country) => {
+  let capitalInfo = result.map((country, i) => {
     if (country.capital) {
       return (
-        <Stack direction={"column"}>
+        <Stack key={i} direction={"column"}>
           <Stack
             direction="row"
             alignItems="center"
@@ -26,7 +26,7 @@ const CapitalList = ({ result, weatherData, countryIndex }) => {
             justifyContent={"center"}
             gap={2}
           >
-            <WeatherList weatherData={weatherData} />
+            <WeatherList key={i} weatherData={weatherData} />
           </Stack>
         </Stack>
       );
