@@ -12,7 +12,7 @@ const SearchResult = ({ result, value }) => {
     if (result[0]?.capital) {
       const cities = result.map((country) => country.capital);
       console.log(cities);
-      findWeather({cities, setWeatherData});
+      findWeather({ cities, setWeatherData });
     }
   }, [result]);
 

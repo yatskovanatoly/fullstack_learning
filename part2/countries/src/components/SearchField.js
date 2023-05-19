@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, TextField } from "@mui/material";
+import { Container, TextField, Grid } from "@mui/material";
 import { Alert } from "@mui/material";
 import Slide from "@mui/material/Slide";
 
@@ -8,7 +8,7 @@ const SearchCountries = ({
   countriesData,
   newSearch,
   setResult,
-  setValue
+  setValue,
 }) => {
   const [warning, setWarning] = useState("");
   const handleChange = (event) => {
@@ -48,9 +48,14 @@ const SearchCountries = ({
   }
 
   return (
-    <Container>
+    <Grid
+      container
+      spacing={0}
+      direction="row"
+      alignItems="center"
+      justifyContent="center"
+    >
       <TextField
-        fullWidth
         disabled={disabled}
         label={label}
         autoComplete="off"
@@ -60,10 +65,10 @@ const SearchCountries = ({
         variant="outlined"
         value={value}
         onChange={handleChange}
-        sx={{marginBottom:'20px'}}
+        sx={{ marginBottom: "20px", width: "300px" }}
       />
       <Container>{warning}</Container>
-    </Container>
+    </Grid>
   );
 };
 

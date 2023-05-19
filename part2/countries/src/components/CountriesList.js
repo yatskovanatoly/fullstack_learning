@@ -3,15 +3,12 @@ import {
   AccordionSummary,
   AccordionDetails,
   Typography,
-  Container,
-  Stack,
+  Box,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import FmdGoodIcon from "@mui/icons-material/FmdGood";
-import TranslateIcon from "@mui/icons-material/Translate";
 import { useState } from "react";
-import CapitalPanel from "./CapitalPanel";
 import Item from "./Item";
+import CountryPanel from "./CountryPanel";
 
 const CountriesList = ({ result, weatherData }) => {
   const [expanded, setExpanded] = useState(false);
@@ -20,75 +17,33 @@ const CountriesList = ({ result, weatherData }) => {
   };
 
   return result.map((country, i) => (
-    <Accordion
-      key={i + 1}
-      sx={{ marginBottom: 1 }}
-      expanded={expanded === `panel${i + 1}`}
-      onChange={handleExpand(`panel${i + 1}`)}
-    >
-      <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
-        aria-controls="panel1a-content"
-        id="panel1a-header"
+    <Box display="flex" alignItems="center" justifyContent="center">
+      <Accordion
+        key={i + 1}
+        sx={{ marginBottom: 1 }}
+        expanded={expanded === `panel${i + 1}`}
+        onChange={handleExpand(`panel${i + 1}`)}
       >
-        <Typography textAlign="center">
-          {country.name.common} {country.flag}
-        </Typography>
-      </AccordionSummary>
-      <AccordionDetails>
-        <Typography component={"span"}>
-          <Container>
-            <Stack spacing={1}>
-              <img
-                className="flag"
-                src={country.flags.png}
-                alt={country.flags.alt}
-              />
-              {country.capital ? (
-                <Item>
-                  <CapitalPanel result={result} countryIndex={i} weatherData={weatherData} />
-                </Item>
-              ) : (
-                // <></>
-                ""
-              )}
-              <Item>
-                <Stack
-                  direction="row"
-                  alignItems="center"
-                  justifyContent={"center"}
-                  gap={0.5}
-                >
-                  <FmdGoodIcon fontSize="small" />
-                  <strong>Area:</strong> {country.area} km²
-                </Stack>
-              </Item>
-              {country.languages ? (
-                <Item>
-                  {" "}
-                  {country.languages ? (
-                    <Stack
-                      direction="row"
-                      alignItems="center"
-                      justifyContent={"center"}
-                      gap={0.5}
-                    >
-                      <TranslateIcon fontSize="small" />
-                      <strong> Languages: </strong>
-                    </Stack>
-                  ) : (
-                    ""
-                  )}
-                  {Object.values(country.languages).join(", ")}
-                </Item>
-              ) : (
-                ""
-              )}
-            </Stack>
-          </Container>
-        </Typography>
-      </AccordionDetails>
-    </Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography textAlign="center">
+            {country.name.common} {country.flag}
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography component={"span"}>
+            <CountryPanel
+              result={result}
+              Item={Item}
+              weatherData={weatherData}
+            />
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+    </Box>
   ));
 };
 

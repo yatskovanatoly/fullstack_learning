@@ -20,7 +20,7 @@ function App() {
   }, []);
 
   return (
-    <Container margin={1} maxWidth="sm" >
+    <Container margin={1} maxWidth="sm">
       <SearchField
         value={value}
         setCountriesData={setCountriesData}
