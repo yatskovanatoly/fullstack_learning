@@ -2,7 +2,6 @@ import axios from "axios";
 
 const countriesUrl = "https://restcountries.com/v3.1/all";
 const weatherUrl = "https://api.weatherapi.com/v1/current.json";
-// const dummyUrl = 'http://localhost:3000/dummyWeathe.json'
 const apiKey = process.env.REACT_APP_API_KEY;
 
 const getAll = () => {

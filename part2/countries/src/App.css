@@ -2,7 +2,9 @@ body {
   padding: 15px;
   min-width: 300px;
 }
-
+img {
+  user-select: none;
+}
 .flag {
   margin: 10px;
   border: 1px solid black;

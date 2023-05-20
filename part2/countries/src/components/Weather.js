@@ -4,7 +4,7 @@ const Weather = ({ weatherData }) => {
   if (!weatherData) {
     return null;
   }
-  return weatherData.map((data, i) => (
+  return Object.values(weatherData).map((data, i) => (
     <Stack
       key={i}
       direction="row"
@@ -14,12 +14,12 @@ const Weather = ({ weatherData }) => {
     >
       <img
         className="weatherIcon"
-        src={data?.condition?.icon}
+        src={data.condition.icon}
         alt="weather icon"
       />
       {Math.round(data.temp_c)}°C
     </Stack>
-  ));
+  ))
 };
 
 export default Weather;

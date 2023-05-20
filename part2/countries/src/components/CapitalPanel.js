@@ -16,9 +16,9 @@ const CapitalList = ({ result, weatherData, countryIndex }) => {
           >
             <LocationCityIcon fontSize="small" />
             <strong>
-              Capital{country.capital?.length > 1 ? "s" : ""}:
+              Capital{country.capital.length > 1 ? "s" : ""}:
             </strong>{" "}
-            {country.capital?.join(`, `)}
+            {country.capital.join(`, `)}
           </Stack>
           <Stack
             direction="row"
@@ -26,7 +26,7 @@ const CapitalList = ({ result, weatherData, countryIndex }) => {
             justifyContent={"center"}
             gap={2}
           >
-            <WeatherList key={i} weatherData={weatherData} />
+            {result.length === 1 ? <WeatherList key={i} weatherData={weatherData} /> : null}
           </Stack>
         </Stack>
       );

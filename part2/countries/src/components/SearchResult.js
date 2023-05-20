@@ -1,23 +1,11 @@
 import { Typography } from "@mui/material";
-import { useEffect, useState } from "react";
 import CountryInfo from "./CountryPanel";
 import CountriesList from "./CountriesList";
 import Item from "./Item";
 import CapitalPanel from "./CapitalPanel";
-import findWeather from "./WeatherFinder";
 // import countriesService from "../services/countriesService.js";
 
-const SearchResult = ({ result, value }) => {
-  const [weatherData, setWeatherData] = useState([]);
-  const cities = result.map((country) => country.capital);
-  useEffect(() => {
-    result.map((country) => {
-    if (country.capital) {
-      findWeather({ cities, setWeatherData });
-      // countriesService.recordWeather(result)
-    }})
-  }, [result]);
-
+const SearchResult = ({ result, value, weatherData }) => {
   if (value === "") {
     return null;
   } else if (result.length === 0) {
