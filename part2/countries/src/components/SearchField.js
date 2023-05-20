@@ -42,7 +42,7 @@ const SearchCountries = ({
 
   let disabled = true;
   let label = "loading countries...";
-  if (countriesData.length > 1) {
+  if (countriesData.length > 0) {
     disabled = false;
     label = "find countries";
   }

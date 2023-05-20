@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import countriesService from "./services/countriesService";
 import SearchField from "./components/SearchField";
 import SearchResult from "./components/SearchResult";
@@ -12,11 +12,11 @@ function App() {
   const newSearch = new RegExp(`^${value}`, "gim");
 
   useEffect(() => {
+    console.log(Date.now());    
     countriesService
       .getAll()
       .then((countries) => setCountriesData(countries))
       .catch((error) => console.log(error));
-    console.log("countries data - request made");
   }, []);
 
   return (

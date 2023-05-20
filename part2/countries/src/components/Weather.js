@@ -1,7 +1,6 @@
 import { Stack } from "@mui/material";
 
 const Weather = ({ weatherData }) => {
-  console.log(weatherData);
   if (!weatherData) {
     return null;
   }

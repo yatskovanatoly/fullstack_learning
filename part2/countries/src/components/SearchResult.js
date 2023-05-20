@@ -5,18 +5,17 @@ import CountriesList from "./CountriesList";
 import Item from "./Item";
 import CapitalPanel from "./CapitalPanel";
 import findWeather from "./WeatherFinder";
-import countriesService from "../services/countriesService.js";
-
-
+// import countriesService from "../services/countriesService.js";
 
 const SearchResult = ({ result, value }) => {
   const [weatherData, setWeatherData] = useState([]);
+  const cities = result.map((country) => country.capital);
   useEffect(() => {
-    if (result[0]?.capital) {
-      const cities = result.map((country) => country.capital);
-      console.log(cities);
+    result.map((country) => {
+    if (country.capital) {
       findWeather({ cities, setWeatherData });
-    }
+      // countriesService.recordWeather(result)
+    }})
   }, [result]);
 
   if (value === "") {
