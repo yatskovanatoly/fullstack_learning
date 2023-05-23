@@ -1,16 +1,18 @@
 import { Stack } from "@mui/material";
 
-const Weather = ({ weatherData }) => {
+const Weather = ({ weatherData, key }) => {
   if (!weatherData) {
     return null;
   }
-  return Object.values(weatherData).map((data, i) => (
+  return Object.values(weatherData).map((data) => (
     <Stack
-      key={i}
+      key={key}
       direction="row"
       alignItems="center"
       justifyContent="center"
-      gap={0}
+      gap={0.5}
+      fontSize={20}
+      sx={{ fontWeight: "lighter" }}
     >
       <img
         className="weatherIcon"
@@ -19,7 +21,7 @@ const Weather = ({ weatherData }) => {
       />
       {Math.round(data.temp_c)}°C
     </Stack>
-  ))
+  ));
 };
 
 export default Weather;

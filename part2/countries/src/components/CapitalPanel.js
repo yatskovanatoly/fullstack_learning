@@ -1,8 +1,8 @@
 import { Stack } from "@mui/material";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
-import WeatherList from "./Weather";
+import Weather from "./Weather";
 
-const CapitalList = ({ result, weatherData, countryIndex }) => {
+const CapitalPanel = ({ result, weatherData, countryIndex, weather }) => {
   let capitalInfo = result.map((country, i) => {
     if (country.capital) {
       return (
@@ -12,6 +12,7 @@ const CapitalList = ({ result, weatherData, countryIndex }) => {
             alignItems="center"
             justifyContent={"center"}
             gap={0.5}
+            margin={1}
             marginBottom={1}
           >
             <LocationCityIcon fontSize="small" />
@@ -26,7 +27,10 @@ const CapitalList = ({ result, weatherData, countryIndex }) => {
             justifyContent={"center"}
             gap={2}
           >
-            {result.length === 1 ? <WeatherList key={i} weatherData={weatherData} /> : null}
+            {/* {result.length === 1 ? (
+              <WeatherList key={i} weatherData={weatherData} />
+            ) : null} */}
+            <Weather key={i} weatherData={weatherData} />
           </Stack>
         </Stack>
       );
@@ -36,4 +40,4 @@ const CapitalList = ({ result, weatherData, countryIndex }) => {
   });
   return capitalInfo[countryIndex];
 };
-export default CapitalList;
+export default CapitalPanel;

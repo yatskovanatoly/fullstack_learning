@@ -33,8 +33,7 @@ function App() {
     result.map((country, i) => {
       if (
         country.capital &&
-        result.length === 1 
-        // && !Object.keys(weather).includes(country.name.common)
+        result.length === 1
       ) {
         findWeather({
           cities,
@@ -67,7 +66,16 @@ function App() {
           setResult={setResult}
           setValue={setValue}
         />
-        <SearchResult result={result} value={value} weatherData={weatherData} />
+        <SearchResult
+          result={result}
+          value={value}
+          weatherData={weatherData}
+          cities={cities}
+          setWeatherData={setWeatherData}
+          setWeather={setWeather}
+          countries={countries}
+          weather={weather}
+        />
       </Container>
     </ThemeProvider>
   );

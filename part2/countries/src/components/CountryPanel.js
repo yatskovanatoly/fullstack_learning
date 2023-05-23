@@ -4,8 +4,8 @@ import TranslateIcon from "@mui/icons-material/Translate";
 import CapitalPanel from "./CapitalPanel";
 import Item from "./Item";
 
-const CountryPanel = ({ result, weatherData, country, i }) => {
-    return (
+const CountryPanel = ({ result, weatherData, country, i, weather }) => {
+  return (
     <Box key={i + 1} display="flex" alignItems="center" justifyContent="center">
       <Card sx={{ width: 400 }}>
         <Typography align="center" gutterBottom>
@@ -29,6 +29,7 @@ const CountryPanel = ({ result, weatherData, country, i }) => {
                   result={result}
                   countryIndex={i}
                   weatherData={weatherData}
+                  weather={weather}
                 />{" "}
               </Stack>
             </Item>
@@ -76,7 +77,7 @@ const CountryPanel = ({ result, weatherData, country, i }) => {
         </Stack>
       </Card>
     </Box>
-    )
+  );
 };
 
 export default CountryPanel;
