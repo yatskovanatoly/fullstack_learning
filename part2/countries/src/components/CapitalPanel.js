@@ -30,7 +30,7 @@ const CapitalPanel = ({ result, weatherData, countryIndex }) => {
             {/* {result.length === 1 ? (
               <WeatherList key={i} weatherData={weatherData} />
             ) : null} */}
-            <Weather i={i} weatherData={weatherData} />
+            <Weather weatherData={weatherData} />
           </Stack>
         </Stack>
       );

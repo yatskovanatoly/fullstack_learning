@@ -13,7 +13,7 @@ const findWeather = ({
   if (Object.keys(weather).includes(countries[i])) {
     setWeatherData(weather[countries[i]].foundWeather);
   } else {
-    const requests = cities[i].map((city) => countriesService.getWeather(city));
+    const requests = cities[i]?.map((city) => countriesService.getWeather(city));
 
     Promise.all(requests)
       .then((responses) => {
