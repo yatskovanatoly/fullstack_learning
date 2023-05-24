@@ -1,12 +1,12 @@
 import { Stack } from "@mui/material";
 
-const Weather = ({ weatherData, key }) => {
+const Weather = ({ weatherData, i }) => {
   if (!weatherData) {
     return null;
   }
   return Object.values(weatherData).map((data) => (
     <Stack
-      key={key}
+      key={i}
       direction="row"
       alignItems="center"
       justifyContent="center"

@@ -2,7 +2,7 @@ import { Stack } from "@mui/material";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import Weather from "./Weather";
 
-const CapitalPanel = ({ result, weatherData, countryIndex, weather }) => {
+const CapitalPanel = ({ result, weatherData, countryIndex }) => {
   let capitalInfo = result.map((country, i) => {
     if (country.capital) {
       return (
@@ -30,7 +30,7 @@ const CapitalPanel = ({ result, weatherData, countryIndex, weather }) => {
             {/* {result.length === 1 ? (
               <WeatherList key={i} weatherData={weatherData} />
             ) : null} */}
-            <Weather key={i} weatherData={weatherData} />
+            <Weather i={i} weatherData={weatherData} />
           </Stack>
         </Stack>
       );
